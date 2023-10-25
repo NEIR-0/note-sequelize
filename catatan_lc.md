@@ -392,3 +392,46 @@ await Book.decrement('stock', {  <<<<<<< ("stock" nama colum / key, "Book.decrem
         id: id
     }
 });
+
+# REQ
+1. req.params
+2. req.query
+3. req.body
+
+# INPUT RADIO
+1. ejs:
+    <form action="/books/radio" method="post">
+        <h1><%= namaAuthors %></h1>
+        <ul>
+            <% data.forEach(el => { %>
+                <li>
+                    <input type="radio" id="test" name="namaAuthors" value="<%= el.name %>" <%= el.name === namaAuthors ? "checked" : "" %>>
+                    <label for="test"><%= el.name %></label>
+                </li>
+            <% }) %>
+        </ul>
+
+        <button type="submit">submit</button>
+    </form>
+
+2. controller post:
+    const {namaAuthors} = req.body      <<<<<<<< (dari "name" input radio)
+    const data = await Author.findAll()
+
+    if(namaAuthors){
+        res.render("testRadio", {
+            data: data,
+            namaAuthors: namaAuthors    <<<<<<<< (masukin "namaAuthors")
+        })
+    }
+    else{
+        res.render("testRadio", {
+            data: data,
+            namaAuthors: ""     <<<<<<<< (musukin "namaAuthors" jadi "", biar gak error!)
+        })
+    }
+
+
+!! JANGAN LUPA !!
+1. TRY & CATCH
+2. KALO GAK ADA YANG MUNCUL SAAT "RES.SEND(DATA)" COBA PAKAI "CONSOLE.LOG(DATA)"
